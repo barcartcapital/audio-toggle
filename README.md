@@ -4,6 +4,8 @@
 
 A lightweight macOS menu bar app to quickly cycle between audio output devices with a global keyboard shortcut.
 
+<img width="298" height="300" alt="audio-toggle-preview" src="https://github.com/user-attachments/assets/4218673d-da88-4a84-bbac-de01278933f2" />
+
 ## Features
 
 - Menu bar app with no Dock icon
