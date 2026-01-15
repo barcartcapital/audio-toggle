@@ -15,7 +15,7 @@ A lightweight macOS menu bar app to quickly cycle between audio output devices w
 ## Requirements
 
 - macOS 14.0 (Sonoma) or later
-- Xcode 15+ (for building from source)
+- Xcode 16+ (for building from source)
 
 ## Installation
 
