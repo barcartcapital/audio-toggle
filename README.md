@@ -21,15 +21,15 @@ A lightweight macOS menu bar app to quickly cycle between audio output devices w
 
 ## Installation
 
-### Option 1: Homebrew (Coming Soon)
+### Option 1: Download Release
+
+Download the latest `.dmg` from [Releases](https://github.com/barcartcapital/audio-toggle/releases).
+
+### Option 2: Homebrew (Coming Soon)
 
 ```bash
 brew install --cask audio-toggle
 ```
-
-### Option 2: Download Release
-
-Download the latest `.dmg` from [Releases](https://github.com/barcartcapital/audio-toggle/releases).
 
 ### Option 3: Build from Source
 
@@ -96,6 +96,12 @@ The project uses [xcodegen](https://github.com/yonaskolb/XcodeGen) to generate t
 xcodegen generate
 xcodebuild -scheme AudioToggle -configuration Release
 ```
+
+### Known Issues
+
+- After setting your hotkey, you may need to quit and restart for hotkey to take effect.
+- Mac notifications needs to be updated to use Banners only and turn off "Show notifications on lock screen", and "Show in Notification Center" by default.
+- Version number (next to Quit) should update with release versions, but it does not.
 
 ## License
 
