@@ -12,7 +12,7 @@ A lightweight macOS menu bar app to quickly cycle between audio output devices w
 
 ## Requirements
 
-- macOS 13.0 (Ventura) or later
+- macOS 14.0 (Sonoma) or later
 - Xcode 15+ (for building from source)
 
 ## Installation
@@ -49,7 +49,7 @@ xcodebuild -project AudioToggle.xcodeproj -scheme AudioToggle -configuration Rel
 
 ## Usage
 
-1. **Launch AudioToggle** - The app appears in your menu bar with a speaker icon
+1. **Launch AudioToggle** - The app appears in your menu bar with a headphones icon
 2. **Select devices** - Click the menu bar icon and check the devices you want to cycle between
 3. **Set hotkey** - Click in the "Shortcut" field and press your preferred key combination (e.g., `fn+F10` or `Option+Shift+A`)
 4. **Toggle!** - Press your hotkey to cycle to the next audio output device
@@ -69,7 +69,7 @@ AudioToggle uses:
 Sources/AudioToggle/
 ├── AudioToggleApp.swift      # App entry point with MenuBarExtra
 ├── Models/
-│   └── AudioDevice.swift     # Audio device model
+│   └── AudioDevice.swift     # AudioOutputDevice model
 ├── Services/
 │   ├── AudioService.swift    # CoreAudio integration
 │   └── PreferencesService.swift  # UserDefaults persistence

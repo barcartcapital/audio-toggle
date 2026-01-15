@@ -36,3 +36,7 @@ Package.resolved
 # Secrets
 *.pem
 *.p12
+
+# Project-specific
+plans/
+todos/
