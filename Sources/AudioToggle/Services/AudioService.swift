@@ -1,4 +1,5 @@
 import Foundation
+import AppKit
 import SimplyCoreAudio
 import Combine
 import UserNotifications
@@ -130,6 +131,11 @@ final class AudioService {
         content.body = "Switched to \(device.displayName)"
         content.sound = nil // Silent notification
 
+        // Try to attach app icon to notification
+        if let iconAttachment = createIconAttachment() {
+            content.attachments = [iconAttachment]
+        }
+
         let request = UNNotificationRequest(
             identifier: UUID().uuidString,
             content: content,
@@ -140,6 +146,44 @@ final class AudioService {
             if let error = error {
                 print("Failed to show notification: \(error)")
             }
+        }
+    }
+
+    private func createIconAttachment() -> UNNotificationAttachment? {
+        // Get app icon from bundle
+        guard let iconURL = Bundle.main.url(forResource: "AppIcon", withExtension: "icns")
+                ?? Bundle.main.url(forResource: "AppIcon", withExtension: "png") else {
+            // Try to create from NSApp icon
+            guard let appIcon = NSApp.applicationIconImage else { return nil }
+
+            let tempDir = FileManager.default.temporaryDirectory
+            let iconPath = tempDir.appendingPathComponent("notification_icon.png")
+
+            // Write icon to temp file
+            guard let tiffData = appIcon.tiffRepresentation,
+                  let bitmap = NSBitmapImageRep(data: tiffData),
+                  let pngData = bitmap.representation(using: .png, properties: [:]) else {
+                return nil
+            }
+
+            do {
+                try pngData.write(to: iconPath)
+                return try UNNotificationAttachment(
+                    identifier: "icon",
+                    url: iconPath,
+                    options: [UNNotificationAttachmentOptionsTypeHintKey: "public.png"]
+                )
+            } catch {
+                print("Failed to create icon attachment: \(error)")
+                return nil
+            }
+        }
+
+        do {
+            return try UNNotificationAttachment(identifier: "icon", url: iconURL, options: nil)
+        } catch {
+            print("Failed to attach icon: \(error)")
+            return nil
         }
     }
 }

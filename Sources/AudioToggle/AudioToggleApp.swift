@@ -3,37 +3,38 @@ import KeyboardShortcuts
 
 @main
 struct AudioToggleApp: App {
-    @State private var audioService = AudioService()
-    @State private var preferencesService = PreferencesService()
-    @State private var hotkeyRegistered = false
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
         MenuBarExtra {
             MenuBarView(
-                audioService: audioService,
-                preferencesService: preferencesService
+                audioService: AppDelegate.shared.audioService,
+                preferencesService: AppDelegate.shared.preferencesService
             )
-            .onAppear {
-                setupHotkeyOnce()
-            }
         } label: {
             Label("AudioToggle", systemImage: "headphones")
         }
         .menuBarExtraStyle(.window)
     }
+}
 
-    private func setupHotkeyOnce() {
-        // Only register the hotkey handler once
-        guard !hotkeyRegistered else { return }
-        hotkeyRegistered = true
+/// AppDelegate to handle app lifecycle events and register hotkey at launch
+class AppDelegate: NSObject, NSApplicationDelegate {
+    static let shared = AppDelegate()
 
-        // Capture services for the closure
-        let prefs = preferencesService
-        let audio = audioService
+    let audioService = AudioService()
+    let preferencesService = PreferencesService()
 
-        KeyboardShortcuts.onKeyUp(for: .cycleAudioDevice) {
-            let selectedDevices = prefs.selectedDevices(from: audio.outputDevices)
-            audio.cycleToNextDevice(in: selectedDevices)
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Register hotkey immediately at app launch
+        setupHotkey()
+    }
+
+    private func setupHotkey() {
+        KeyboardShortcuts.onKeyUp(for: .cycleAudioDevice) { [weak self] in
+            guard let self = self else { return }
+            let selectedDevices = self.preferencesService.selectedDevices(from: self.audioService.outputDevices)
+            self.audioService.cycleToNextDevice(in: selectedDevices)
         }
     }
 }
