@@ -1,5 +1,7 @@
 # AudioToggle
 
+[![Downloads](https://img.shields.io/github/downloads/barcartcapital/audio-toggle/total?style=flat-square&label=downloads)](https://github.com/barcartcapital/audio-toggle/releases)
+
 A lightweight macOS menu bar app to quickly cycle between audio output devices with a global keyboard shortcut.
 
 ## Features
